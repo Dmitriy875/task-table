@@ -5,6 +5,11 @@ set_include_path( get_include_path() . PATH_SEPARATOR . "C:\OpenServer\domains\b
 spl_autoload_register();
 spl_autoload_extensions( ".php,.inc" );
 
-$router = new route\RouterEngine;
-echo $router->hi;
+use route\RouterEngine;
+
+session_start();
+
+$router = new RouterEngine;
+$router->start();
+$router->match();
 ?>
