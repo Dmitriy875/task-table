@@ -10,8 +10,15 @@ class View {
     $this->path = $this->route['controller'] . "/" . $this->route['action'];
   }
 
-  public function render( $title, $vars = [] ) {
-    require_once( 'app/views/layouts/' . $this->layout . '/' . $this->route['action'] . '.php' );
+  public function getHeader( $title, $vars = [] ) {
+    require_once( 'app/views/layouts/' . $this->layout . '/' . $this->route['method'][0] . '.php' );
+  }
+  public function getContent() {
+    require_once( 'app/views/layouts/' . $this->layout . '/' . $this->route['method'][1] . '.php' );
+  }
+
+  public function getFooter() {
+    require_once( 'app/views/layouts/' . $this->layout . '/' . $this->route['method'][2] . '.php' );
   }
 }
 

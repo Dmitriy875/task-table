@@ -3,7 +3,8 @@
 return [
   '' => [
     'controller' => 'index',
-    'action' => 'main'
+    'action' => 'main',
+    'method' => ['header', 'footer', 'content'],
   ],
   // 'account/login' => [
   //   'controller' => 'account',

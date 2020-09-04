@@ -36,6 +36,15 @@ class RouterEngine {
         if( method_exists( $path, $action ) ) {
           $controller = new $path( $this->params );
           $controller->$action();
+
+          foreach( $this->params['method'] as $method ) {
+            $method = "get" . ucfirst( $this->$method );
+            if( method_exists( $path, $method ) ) {
+              $controller->$method();
+              echo "exists";
+            }
+
+          }
         }
       } else {
         echo "не найден: " . $path;
