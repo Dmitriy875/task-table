@@ -1,6 +1,6 @@
 <?php
 
-// use View\View;
+use app\core\View;
 
 ?>
 <!DOCTYPE html>
@@ -11,12 +11,12 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 
-  <title>Zen | Task-table</title>
+  <title><?php echo $title ?></title>
 
   <?php
 
-  // View::getCssFiles();
-  // View::includeCssFiles();
+  View::getCssFiles();
+  View::includeCssFiles();
 
   ?>
 

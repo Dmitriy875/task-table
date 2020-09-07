@@ -2,9 +2,13 @@
 
 return [
   '' => [
-    'controller' => 'index',
-    'action' => 'main',
-    'method' => ['header', 'footer', 'content'],
+    'controller'  => 'index',
+    'action'      => 'main',
+    'method'      => [
+                      'header',
+                      'content',
+                      'footer',
+                      ],
   ],
   // 'account/login' => [
   //   'controller' => 'account',
