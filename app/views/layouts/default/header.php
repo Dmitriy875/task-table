@@ -1,6 +1,6 @@
 <?php
 
-// use View\View;
+use app\core\View;
 
 ?>
 <!DOCTYPE html>
@@ -15,8 +15,8 @@
 
   <?php
 
-  // View::getCssFiles();
-  // View::includeCssFiles();
+  View::getCssFiles();
+  View::includeCssFiles();
 
   ?>
 
