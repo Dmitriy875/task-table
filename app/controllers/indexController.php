@@ -8,6 +8,8 @@ class IndexController extends Controller {
     $this->view->getHeader( "Main page" );
     $this->view->getContent();
     $this->view->getFooter();
+
+    $this->model->getTasks();
   }
 }
 
