@@ -6,7 +6,9 @@ use app\core\Model;
 
 class Index extends Model {
   public function getTasks() {
-    echo "tasks";
+    $query = "SELECT * FROM task_book";
+    $tasks = $this->dsn->query( $query );
+    return $tasks;
   }
 }
 

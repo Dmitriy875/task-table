@@ -19,12 +19,16 @@ class View {
     require_once( 'app/views/layouts/' . $this->layout . '/' . $this->route['method'][0] . '.php' );
   }
 
-  public function getContent() {
+  public function getContent( $tasks = [] ) {
     require_once( 'app/views/layouts/' . $this->layout . '/' . $this->route['method'][1] . '.php' );
   }
 
   public function getFooter() {
     require_once( 'app/views/layouts/' . $this->layout . '/' . $this->route['method'][2] . '.php' );
+  }
+
+  public function getPaginator() {
+    echo "йа пажинатор )))";
   }
 
 

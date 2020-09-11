@@ -41,7 +41,7 @@ class RouterEngine {
             $method = "get" . ucfirst( $this->$method );
             if( method_exists( $path, $method ) ) {
               $controller->$method();
-              echo ( $method );
+              exit;
             }
 
           }

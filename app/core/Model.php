@@ -6,11 +6,11 @@ use app\lib\Db;
 
 abstract class Model {
 
-  protected $db;
+  protected $dsn;
 
   public function __construct() {
     $dbConnection = Db::getInstance();
-    $this->db = $dbConnection->getConnection();
+    $this->dsn = $dbConnection->getConnection();
   }
 }
 

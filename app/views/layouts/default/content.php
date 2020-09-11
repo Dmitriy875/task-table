@@ -1,16 +1,6 @@
 <?php
-// use App\Paginator;
-// use Model\Model;
-// use Model\Queries;
-// use Model\PaginationModel;
-// use Model\TaskModel;
-// use View\View;
-// use View\TaskView;
-// use View\PaginationView;
-// use Controller\TaskController;
 
-
-//
+// print_r( $tasks );
 // // Users for select
 // $dbSelectUsers = PaginationModel::getOrderBy( "SELECT user FROM task_book" );
 //
@@ -30,7 +20,7 @@
 // $statusUniqArr = array_unique( $statusArr );
 
 
-
+// $this->model->getTasks();
 
 ?>
 <body>
@@ -38,33 +28,33 @@
   <div class="jumbotron pt-4 pb-0">
     <div class="row">
       <div class="col-sm-3 offset-md-9">
-      <?php  //if( $_SESSION['authenticated']): ?>
+      <?php  if( $_SESSION['authenticated']): ?>
       <a href="admin.php" class="btn btn-light">Admin</a>
           <a href="?auth=logout" class="btn btn-light">Logout</a>
-      <?php //else: ?>
+      <?php else: ?>
         <form action="/" method="POST">
           <div class="form-group">
-
             <input type="text" name="admin_name" placeholder="Login" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
           </div>
-          <div class="form-group">
 
+          <div class="form-group">
             <input type="password" name="admin_password" placeholder="Password" class="form-control" id="exampleInputPassword1">
           </div>
+          
           <div class="row">
             <div class="col-sm-5">
               <button type="submit" name="auth_try" class="btn btn-primary" value='auth'>Sign in</button>
             </div>
             <div class="col-sm-7">
-              <?php //if( $_POST['auth_try'] ) echo  $alert ?>
+              <?php if( $_POST['auth_try'] ) echo  $alert ?>
             </div>
           </div>
         </form>
-      <?php //endif ?>
+      <?php endif ?>
 
       </div>
       <div class='col-sm-9'>
-        <h1 class="display-3 text-white">Zen task-table</h1>
+        <h1 class="display-3 text-white">Task-table</h1>
       </div>
     </div>
   </div>
@@ -92,7 +82,7 @@
         <thead>  <tr>
             <td><span class="alert-link">Sort by user: </span><span class="small"><a href="?sort=asc&type=user">asc</a> | <a href="?sort=desc&type=user">desc</a></span></td>
             <td><span class="alert-link">Sort by email: </span><span class="small"><a href="?sort=asc&type=email">asc</a> | <a href="?sort=desc&type=email">desc</a></span></td>
-           <td><span class="alert-link">Sort by status: </span><span class="small"><a href="?sort=asc&type=status">asc</a> | <a href="?sort=desc&type=status">desc</a></span></td>
+            <td><span class="alert-link">Sort by status: </span><span class="small"><a href="?sort=asc&type=status">asc</a> | <a href="?sort=desc&type=status">desc</a></span></td>
           </tr>
         </thead>
           <tr>
@@ -119,32 +109,30 @@
       </table>
     </div>
 
-      <?php
-
-      //foreach( $dbResult as $person ): ?>
+      <?php foreach( $tasks as $person ): ?>
 
       <div class="alert alert-secondary" role="alert">
 
         <div class="clearfix">
-          For user: <a href="?name=<?php//= $person['user']; ?>" class="alert-link">
-          <?php//= $person['user']; ?></a>
+          For user: <a href="?name=<?php echo $person['user']; ?>" class="alert-link">
+          <?php echo $person['user']; ?></a>
 
-          ( <a href="?email=<?php//= $person['email']; ?>" class="small"><?php//= $person['email']; ?></a> )
+          ( <a href="?email=<?php echo $person['email']; ?>" class="small"><?php echo $person['email']; ?></a> )
         </div>
 
         <div class="row">
           <div class="col-sm-9">
-            Task: <span class="alert-link"><?php//= $person['task']; ?></span>
+            Task: <span class="alert-link"><?php echo $person['task']; ?></span>
           </div>
 
-          <div class="col-sm-3 text-right"><?php// if( $person['admin_edit'] ) echo "<small>Edited by admin</small>"; ?></div>
+          <div class="col-sm-3 text-right"><?php if( $person['admin_edit'] ) echo "<small>Edited by admin</small>"; ?></div>
         </div>
 
         <div class="clearfix">
-          <a href="?status=<?php//= $person['status']; ?>" class="alert-<?php//= $paginator->view->statusColor( $person['status'] ) ?>"> <?= $person['status']; ?></a>
+          <a href="?status=<?php echo $person['status']; ?>" class="alert-<?php // $paginator->view->statusColor( $person['status'] ) ?>"> <?= $person['status']; ?></a>
         </div>
       </div>
-    <?php //endforeach ?>
+    <?php endforeach ?>
       </tbody>
     </table>
 
