@@ -1,11 +1,10 @@
 <?php
 
-// print_r( $tasks );
 // // Users for select
-// $dbSelectUsers = PaginationModel::getOrderBy( "SELECT user FROM task_book" );
-//
-// $userNamesArr = array_column( $dbSelectUsers, 'user');
-// $userNamesUniqArr = array_unique( $userNamesArr );
+$dbSelectUsers = $users;
+
+$userNamesArr = array_column( $dbSelectUsers, 'user');
+$userNamesUniqArr = array_unique( $userNamesArr );
 //
 // // Emails for select
 // $dbSelectEmails = PaginationModel::getOrderBy( "SELECT email FROM task_book" );
@@ -19,8 +18,6 @@
 // $statusArr = array_column( $dbSelectStatus, 'status');
 // $statusUniqArr = array_unique( $statusArr );
 
-
-// $this->model->getTasks();
 
 ?>
 <body>
@@ -88,9 +85,9 @@
           <tr>
             <td><select class="" name="" onchange="if (this.value) window.location.href = this.value">
                 <option value="">Select</option>
-                <?php //foreach( $userNamesUniqArr as $userName ) {
-                  //echo "<option value='?name=$userName&select=name'>$userName</option>";
-                //}?>
+                <?php foreach( $userNamesUniqArr as $userName ) {
+                  echo "<option value='?name=$userName&select=name'>$userName</option>";
+                }?>
               </select></td>
             <td><select class="" name="" onchange="if (this.value) window.location.href = this.value">
              <option value="">Select</option>

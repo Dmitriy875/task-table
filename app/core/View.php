@@ -1,5 +1,6 @@
 <?php
 namespace app\core;
+use app\lib\modules\paginator\Paginator;
 
 class View {
   public $path;
@@ -7,7 +8,7 @@ class View {
 
   public static $cssFilesToConnect = array();
   public static $trustedCssFiles = array(
-    "bootstrap.min.css" => "zen",
+    "bootstrap.min.css" => "default",
   );
 
   public function __construct( $route ) {
@@ -19,7 +20,7 @@ class View {
     require_once( 'app/views/layouts/' . $this->layout . '/' . $this->route['method'][0] . '.php' );
   }
 
-  public function getContent( $tasks = [] ) {
+  public function getContent( $tasks = [], $users = [] ) {
     require_once( 'app/views/layouts/' . $this->layout . '/' . $this->route['method'][1] . '.php' );
   }
 
@@ -28,7 +29,7 @@ class View {
   }
 
   public function getPaginator() {
-    echo "йа пажинатор )))";
+      new Paginator;
   }
 
 
