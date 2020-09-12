@@ -18,7 +18,6 @@ $dbSelectStatus = $statuses;
 $statusArr = array_column( $dbSelectStatus, 'status');
 $statusUniqArr = array_unique( $statusArr );
 
-
 ?>
 <body>
 <div class="container">
