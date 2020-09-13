@@ -20,7 +20,7 @@ class View {
     require_once( 'app/views/layouts/' . $this->layout . '/' . $this->route['method'][0] . '.php' );
   }
 
-  public function getContent( $tasks = [], $users = [], $emails = [], $statuses = [] ) {
+  public function getContent( $tasks, $users, $emails, $statuses, $paginator, $current_page, $itemsToShow, $numOfAllItems, $dbResult ) {
     require_once( 'app/views/layouts/' . $this->layout . '/' . $this->route['method'][1] . '.php' );
   }
 
@@ -29,7 +29,7 @@ class View {
   }
 
   public function getPaginator() {
-      new Paginator;
+      return new Paginator;
   }
 
 

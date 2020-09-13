@@ -3,11 +3,13 @@
 namespace app\models;
 
 use app\core\Model;
+use app\controllers\IndexController;
 
 class Index extends Model {
+  protected $query = "SELECT * FROM task_book ";
+
   public function getTasks() {
-    $query = "SELECT * FROM task_book";
-    $tasks = $this->dsn->query( $query );
+    $tasks = $this->dsn->query( $this->query );
     return $tasks;
   }
 
@@ -28,6 +30,44 @@ class Index extends Model {
     $statuses = $this->dsn->query( $query );
     $statuses = $statuses->fetchAll();
     return $statuses;
+  }
+
+  public function getNumOfItems() {
+    $stmt	= $this->dsn->prepare( IndexController::sqlModify( $this->query ) );
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+
+    // Count all notes in DB
+    return count( $result );
+  }
+
+
+  public function selectByGetParam( $start, $limit ) {
+    $sql = IndexController::sqlModify( $this->query );
+
+    $setLimit = " LIMIT " . $start;
+    $startFrom = ", " . $limit;
+
+    if( $_GET['name'] ) {
+      $dbResult = self::getOrderBy( $sql . $setLimit . $startFrom );
+    }
+    elseif ( $_GET['email'] ) {
+      $dbResult = self::getOrderBy( $sql . $setLimit . $startFrom );
+    }
+    elseif ( $_GET['status'] ) {
+      $dbResult = self::getOrderBy( $sql . $setLimit . $startFrom );
+    }
+    else {
+      $dbResult = self::getOrderBy( $sql . $setLimit . $startFrom );
+      }
+    return $dbResult;
+  }
+
+  public function getOrderBy( $sql ) {
+    $stmt	= $this->dsn->prepare( $sql );
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    return $result;
   }
 }
 

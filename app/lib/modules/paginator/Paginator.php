@@ -1,6 +1,7 @@
-<?php  
+<?php
 
 namespace app\lib\modules\paginator;
+
 class Paginator {
   private $numOfAllItems;
   private $numOfItemsToShow;
@@ -50,7 +51,18 @@ class Paginator {
     else
       return $this->currentPage;
   }
+
+  public function statusColor( $color ) {
+    if( $color == "failed" )
+      return "danger";
+    elseif( $color == "complete" )
+      return "success";
+    elseif( $color == "in progress" )
+      return "primary";
+    elseif( $color == "new" )
+      return "warning";
+  }
 }
 
 
-?>paginator in your ass подключен
+?>

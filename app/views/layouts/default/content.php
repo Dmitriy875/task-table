@@ -1,24 +1,3 @@
-<?php
-
-// // Users for select
-$dbSelectUsers = $users;
-
-$userNamesArr = array_column( $dbSelectUsers, 'user');
-$userNamesUniqArr = array_unique( $userNamesArr );
-//
-// // Emails for select
-$dbSelectEmails = $emails;
-
-$emailArr = array_column( $dbSelectEmails, 'email');
-$emailUniqArr = array_unique( $emailArr );
-//
-// // Statuses for select
-$dbSelectStatus = $statuses;
-
-$statusArr = array_column( $dbSelectStatus, 'status');
-$statusUniqArr = array_unique( $statusArr );
-
-?>
 <body>
 <div class="container">
   <div class="jumbotron pt-4 pb-0">
@@ -60,18 +39,18 @@ $statusUniqArr = array_unique( $statusArr );
     <div class="alert alert-info" role="alert">
 
       <?php
-      // if( $_GET['name'] ) {
-      //     $attr = "&name=".$_GET['name'];
-      // }
-      // if( $_GET['email'] ) {
-      //     $attr = "&email=".$_GET['email'];
-      // }
-      // if( $_GET['status'] ) {
-      //     $attr = "&status=".$_GET['status'];
-      // }
-      // if( $_GET['sort'] ) {
-      //     $sort = "&sort=".$_GET['sort']."&type=".$_GET['type'];
-      // }
+      if( $_GET['name'] ) {
+          $attr = "&name=".$_GET['name'];
+      }
+      if( $_GET['email'] ) {
+          $attr = "&email=".$_GET['email'];
+      }
+      if( $_GET['status'] ) {
+          $attr = "&status=".$_GET['status'];
+      }
+      if( $_GET['sort'] ) {
+          $sort = "&sort=".$_GET['sort']."&type=".$_GET['type'];
+      }
       ?>
 
       <table class="table">
@@ -84,28 +63,48 @@ $statusUniqArr = array_unique( $statusArr );
           <tr>
             <td><select class="" name="" onchange="if (this.value) window.location.href = this.value">
                 <option value="">Select</option>
-                <?php foreach( $userNamesUniqArr as $userName ) {
+                <?php
+                // $users recieved from Index::$getUsers()
+                $dbSelectUsers = $users;
+
+                $userNamesArr = array_column( $dbSelectUsers, 'user');
+                $userNamesUniqArr = array_unique( $userNamesArr );
+                foreach( $userNamesUniqArr as $userName ) {
                   echo "<option value='?name=$userName&select=name'>$userName</option>";
                 }?>
               </select></td>
             <td><select class="" name="" onchange="if (this.value) window.location.href = this.value">
              <option value="">Select</option>
-               <?php foreach( $emailUniqArr as $userEmail ) {
+               <?php
+               // $emails recieved from Index::$getEmails()
+               $dbSelectEmails = $emails;
+
+               $emailArr = array_column( $dbSelectEmails, 'email');
+               $emailUniqArr = array_unique( $emailArr );
+               foreach( $emailUniqArr as $userEmail ) {
                  echo "<option value='?email=$userEmail&select=email'>$userEmail</option>";
                }?>
                 </select>
          </td>
          <td><select class="" name="" onchange="if (this.value) window.location.href = this.value">
            <option value="">Select</option>
-           <?php foreach( $statusUniqArr as $status ) {
+           <?php
+           // $statuses recieved from Index::$getStatuses()
+           $dbSelectStatus = $statuses;
+
+           $statusArr = array_column( $dbSelectStatus, 'status');
+           $statusUniqArr = array_unique( $statusArr );
+
+           foreach( $statusUniqArr as $status ) {
              echo "<option value='?status=$status&select=status'>$status</option>";
            }?>
          </select></td>
           </tr>
       </table>
     </div>
-
-      <?php foreach( $tasks as $person ): ?>
+      <?php
+      // $tasks recieved from Index::$getTasks()
+      foreach( $dbResult as $person ): ?>
 
       <div class="alert alert-secondary" role="alert">
 
@@ -125,39 +124,35 @@ $statusUniqArr = array_unique( $statusArr );
         </div>
 
         <div class="clearfix">
-          <a href="?status=<?php echo $person['status']; ?>" class="alert-<?php // $paginator->view->statusColor( $person['status'] ) ?>"> <?= $person['status']; ?></a>
+          <a href="?status=<?php echo $person['status']; ?>" class="alert-<?php echo $paginator->statusColor( $person['status'] ) ?>"> <?= $person['status']; ?></a>
         </div>
       </div>
     <?php endforeach ?>
       </tbody>
     </table>
-
-
     <nav aria-label="Page navigation example">
       <ul class="pagination">
 
         <li class="page-item">
-          <a class="page-link" href="?current_page=<?//= $paginator->controller->navPrevious() . $attr.$sort ?>" aria-label="Previous">
+          <a class="page-link" href="?current_page=<?php echo $paginator->navPrevious() . $attr. $sort ?>" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
 
       <?php
-      //echo $numOfItems;
-
-        // for( $i = 1; $i < ( $paginator->controller->getNumOfAllPages( $numOfAllItems ) +1 ); $i++) {
-        //   echo '<li class="page-item"><a class="page-link" href="?current_page='.$i.$attr.$sort.'">' . $i . '</a></li>';
-        // }
+        for( $i = 1; $i < ( $paginator->getNumOfAllPages( $numOfAllItems ) + 1 ); $i++) {
+           echo '<li class="page-item"><a class="page-link" href="?current_page='.$i.$attr.$sort.'">' . $i . '</a></li>';
+        }
         ?>
 
         <li class="page-item">
-          <a class="page-link" href="?current_page=<?php//= $paginator->controller->navNext() . $attr.$sort ?>" aria-label="Next">
+          <a class="page-link" href="?current_page=<?php echo $paginator->navNext() . $attr.$sort ?>" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
         <?php
-        //if( $_GET )
-        //  echo '<span><a href="/" class="page-link">reset</a></span>';
+        if( $_GET )
+         echo '<span><a href="/" class="page-link">reset</a></span>';
         ?>
 
       </ul>

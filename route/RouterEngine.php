@@ -1,4 +1,5 @@
 <?php
+
 namespace Route;
 use app\controllers;
 
@@ -14,13 +15,16 @@ class RouterEngine {
   }
 
   public function add( $route, $params ) {
-    $route = "#^" .$route . "$#";
+    $gets = require_once( 'app/config/gets.php');
+    preg_match( "/\?.[^=]*/", $_SERVER['REQUEST_URI'], $matches);
+    $res = array_search( $matches[0], $gets );
+    $route = "#^" . $route . "(\?$gets[$res]=.+)?$#";
     $this->routes[ $route ] = $params;
   }
 
   public function match() {
     $url = trim( $_SERVER['REQUEST_URI'], '/' );
-    foreach ($this->routes as $route => $params ) {
+    foreach ( $this->routes as $route => $params ) {
       if( preg_match( $route, $url, $matches ) ) {
         $this->params = $params;
         return true;
@@ -43,7 +47,6 @@ class RouterEngine {
               $controller->$method();
               exit;
             }
-
           }
         }
       } else {
@@ -52,7 +55,6 @@ class RouterEngine {
     } else {
       echo "Маршрут не найден";
     }
-
   }
 }
 
