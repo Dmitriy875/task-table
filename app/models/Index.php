@@ -4,13 +4,32 @@ namespace app\models;
 
 use app\core\Model;
 use app\controllers\IndexController;
+use app\lib\Db;
+use app\lib\Utilities;
 
 class Index extends Model {
+  use Utilities;
+  protected $authPermission;  //
   protected $query = "SELECT * FROM task_book ";
 
   public function getTasks() {
     $tasks = $this->dsn->query( $this->query );
     return $tasks;
+  }
+
+  public function createTask( $insecurePost ) {
+    $name   = self::disarm( $insecurePost['name'] );
+    $email  = self::disarm( $insecurePost['email'] );
+    $task   = self::disarm( $insecurePost['task'] );
+
+    $sql = "INSERT INTO task_book (user, email, task, status)
+            VALUES ('$name', '$email', '$task', 'new')";
+
+    $config = Db::getInstance();
+    $stmt	= $config->pdo->prepare( $sql );
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    return $result;
   }
 
   public function getUsers() {
@@ -39,6 +58,22 @@ class Index extends Model {
 
     // Count all notes in DB
     return count( $result );
+  }
+
+  public function authQuery( $safeAuthData ) {
+    if( $safeAuthData["error"] )
+      return false;
+    $error = "";
+    $sql = "SELECT name, password
+            FROM users WHERE name = '$safeAuthData[admin_name]'AND password = '$safeAuthData[admin_password]'";
+
+    $config = Db::getInstance();
+    $stmt	= $config->pdo->prepare( $sql );
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    if( $result ) {
+      return $this->authPermission = true;
+    }
   }
 
 

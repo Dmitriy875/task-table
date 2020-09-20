@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-3 offset-md-9">
       <?php  if( $_SESSION['authenticated']): ?>
-      <a href="admin.php" class="btn btn-light">Admin</a>
+      <a href="admin" class="btn btn-light">Admin</a>
           <a href="?auth=logout" class="btn btn-light">Logout</a>
       <?php else: ?>
         <form action="/" method="POST">
@@ -157,13 +157,7 @@
 
       </ul>
     </nav>
-    <?php
-    // echo $taskCreator->view->formValidation();
-    // $taskCreator->view->getForm();
-    // if( $taskCreator->view->queryPermission == true ) {
-    //   $taskCreator->model->createTask( $_POST );
-    // }
-    ?>
+    <?php echo $validation; require_once( "app/views/layouts/default/forms/add_task.php" ); ?>
   </div>
 </div>
 </body>

@@ -15,8 +15,8 @@ class RouterEngine {
   }
 
   public function add( $route, $params ) {
-    $gets = require_once( 'app/config/gets.php');
-    preg_match( "/\?.[^=]*/", $_SERVER['REQUEST_URI'], $matches);
+    $gets = require( 'app/config/gets.php');
+    preg_match( "/\?.[^=]*/", $_SERVER['REQUEST_URI'], $matches );
     $res = array_search( $matches[0], $gets );
     $route = "#^" . $route . "(\?$gets[$res]=.+)?$#";
     $this->routes[ $route ] = $params;
@@ -41,11 +41,13 @@ class RouterEngine {
           $controller = new $path( $this->params );
           $controller->$action();
 
-          foreach( $this->params['method'] as $method ) {
-            $method = "get" . ucfirst( $this->$method );
-            if( method_exists( $path, $method ) ) {
-              $controller->$method();
-              exit;
+          if( $this->params['method'] ) {
+            foreach( $this->params['method'] as $method ) {
+              $method = "get" . ucfirst( $this->$method );
+              if( method_exists( $path, $method ) ) {
+                $controller->$method();
+                exit;
+              }
             }
           }
         }

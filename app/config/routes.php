@@ -11,10 +11,14 @@ return [
                       'paginator',
                       ],
   ],
-  // 'account/login' => [
-  //   'controller' => 'account',
-  //   'action' => 'login'
-  // ],
+  'admin' => [
+      'controller' => 'admin',
+      'action' => 'manage',
+      'method' => [
+                    'header',
+                    'content',
+      ],
+    ],
 ];
 
 ?>

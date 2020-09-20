@@ -7,6 +7,7 @@ return [
   '?status',
   '?current_page',
   '?sort',
+  '?auth',
 ];
 
 ?>
