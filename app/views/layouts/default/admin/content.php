@@ -72,7 +72,7 @@ $uniqueStatuses = [ "complete",
                       }
 
                   }
-                  $_POST['ass'] = $taskItem['status'] ;
+
                  ?>
                </select>
              </form>

@@ -7,10 +7,10 @@ use PDO;
 
 class Db {
   private $host 		  = 'localhost';
-  private $user 	   	= 'cadr';
-  private $pass 		  = '';
-  private $charset 	  = 'utf8';
-  private $database 	= 'beejee';
+  private $user 	   	= 'f0465068_cadr';
+  private $pass 		  = 'abelohost';
+  private $charset 	  = 'utf8mb4';
+  private $database 	= 'f0465068_wp_abelhost';
   public 	$pdo;
   private static $instance;
 

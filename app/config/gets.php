@@ -1,6 +1,6 @@
 <?php
 
-return [
+return $whitelist = [
   '?select',
   '?name',
   '?email',
@@ -8,6 +8,12 @@ return [
   '?current_page',
   '?sort',
   '?auth',
+  
+  'asc',
+  'desc',
+  'user',
+  'email',
+  'status',
 ];
 
 ?>

@@ -10,7 +10,7 @@ class IndexController extends Controller {
     $safeAuthData = $this->safeAuth();
     $authResult   = $this->model->authQuery( $safeAuthData );
     if( !$authResult )
-    $alert = $this->view->notify( $safeAuthData );
+      $alert = $this->view->notify( $safeAuthData );
     $this->auth( $authResult );
     // Logout
     self::sessionBreak();
@@ -29,7 +29,7 @@ class IndexController extends Controller {
                 $paginator->getCurrentPage(),
                 $paginator->getNumOfItemsToShow(),
                 $this->model->getNumOfItems(),
-                $dbResult = $this->model->selectByGetParam( $res = $paginator->paginatorCurrentPage(), $paginator->getNumOfItemsToShow() ),
+                $dbResult = $this->selectByGetParam( $res = $paginator->paginatorCurrentPage(), $paginator->getNumOfItemsToShow() ),
 
               // Validation messages
                 $alert,
@@ -41,9 +41,37 @@ class IndexController extends Controller {
     $this->view->getFooter();
   }
 
-  public static function sqlModify( $sql ) {
-    if( isset( $_GET['sort'] ) AND isset( $_GET['type'] ) )
-      $sort = " ORDER BY " . $_GET['type'] . " " . $_GET['sort'];
+  // SQL-modification
+  public function selectByGetParam( $start, $limit ) {
+    $sql = self::sqlModify( $this->model::$query );
+
+    $setLimit = " LIMIT " . $start;
+    $startFrom = ", " . $limit;
+
+    if( $_GET['name'] ) {
+      $dbResult = $this->model->getOrderBy( $sql . $setLimit . $startFrom );
+    }
+    elseif ( $_GET['email'] ) {
+      $dbResult = $this->model->getOrderBy( $sql . $setLimit . $startFrom );
+    }
+    elseif ( $_GET['status'] ) {
+      $dbResult = $this->model->getOrderBy( $sql . $setLimit . $startFrom );
+    }
+    else {
+      $dbResult = $this->model->getOrderBy( $sql . $setLimit . $startFrom );
+      }
+    return $dbResult;
+  }
+  // SQL-modification for SELECT
+  public function sqlModify( $sql ) {
+    $whitelist = require('app\config\gets.php');
+
+    // & SQL-injection secure using whitelist
+    if( isset( $_GET['sort'] ) AND isset( $_GET['type'] ) AND $sort = array_search( $_GET['sort'], $whitelist ) AND $type = array_search( $_GET['type'], $whitelist ) ) {
+      $sort = " ORDER BY " . $whitelist[$type] . " " . $whitelist[$sort];
+    } else {
+      http_response_code(404);
+    }
 
     if( isset( $_GET['name'] ) ) {
       $sql .= " WHERE user = '$_GET[name]'";
@@ -60,25 +88,10 @@ class IndexController extends Controller {
     return $sql;
   }
 
-  public function authQuery( $safeAuthData ) {
-    if( $safeAuthData["error"] )
-      return false;
-    $error = "";
-    $sql = "SELECT name, password
-            FROM users WHERE name = '$safeAuthData[admin_name]'AND password = '$safeAuthData[admin_password]'";
 
-    $config = Db::getInstance();
-    $stmt	= $config->pdo->prepare( $sql );
-    $stmt->execute();
-    $result = $stmt->fetchAll();
-    if( $result ) {
-      return $this->authPermission = true;
-    }
-  }
-
+  // Auth functions
   public function auth( $answer ) {
     if( $answer == true ) {
-      session_start();
       $_SESSION['authenticated'] = true;
       header( "Location: /admin ");
     }
@@ -106,7 +119,7 @@ class IndexController extends Controller {
       }
     }
   }
-
+  // Logout
   public function sessionBreak() {
     if( $_GET['auth'] === "logout" )  {
       session_unset();

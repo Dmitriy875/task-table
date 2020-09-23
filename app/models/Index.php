@@ -10,10 +10,10 @@ use app\lib\Utilities;
 class Index extends Model {
   use Utilities;
   protected $authPermission;  //
-  protected $query = "SELECT * FROM task_book ";
+  public static $query = "SELECT * FROM task_book ";
 
   public function getTasks() {
-    $tasks = $this->dsn->query( $this->query );
+    $tasks = $this->dsn->query( self::$query );
     return $tasks;
   }
 
@@ -52,7 +52,7 @@ class Index extends Model {
   }
 
   public function getNumOfItems() {
-    $stmt	= $this->dsn->prepare( IndexController::sqlModify( $this->query ) );
+    $stmt	= $this->dsn->prepare( IndexController::sqlModify( self::$query) ); //
     $stmt->execute();
     $result = $stmt->fetchAll();
 
@@ -74,28 +74,6 @@ class Index extends Model {
     if( $result ) {
       return $this->authPermission = true;
     }
-  }
-
-
-  public function selectByGetParam( $start, $limit ) {
-    $sql = IndexController::sqlModify( $this->query );
-
-    $setLimit = " LIMIT " . $start;
-    $startFrom = ", " . $limit;
-
-    if( $_GET['name'] ) {
-      $dbResult = self::getOrderBy( $sql . $setLimit . $startFrom );
-    }
-    elseif ( $_GET['email'] ) {
-      $dbResult = self::getOrderBy( $sql . $setLimit . $startFrom );
-    }
-    elseif ( $_GET['status'] ) {
-      $dbResult = self::getOrderBy( $sql . $setLimit . $startFrom );
-    }
-    else {
-      $dbResult = self::getOrderBy( $sql . $setLimit . $startFrom );
-      }
-    return $dbResult;
   }
 
   public function getOrderBy( $sql ) {

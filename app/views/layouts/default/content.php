@@ -53,15 +53,10 @@
       }
       ?>
 
-      <table class="table">
-        <thead>  <tr>
-            <td><span class="alert-link">Sort by user: </span><span class="small"><a href="?sort=asc&type=user">asc</a> | <a href="?sort=desc&type=user">desc</a></span></td>
-            <td><span class="alert-link">Sort by email: </span><span class="small"><a href="?sort=asc&type=email">asc</a> | <a href="?sort=desc&type=email">desc</a></span></td>
-            <td><span class="alert-link">Sort by status: </span><span class="small"><a href="?sort=asc&type=status">asc</a> | <a href="?sort=desc&type=status">desc</a></span></td>
-          </tr>
-        </thead>
-          <tr>
-            <td><select class="" name="" onchange="if (this.value) window.location.href = this.value">
+
+            <div class="sm-1">
+              <span class="alert-link">Sort by user: </span><span class="small"><a href="?sort=asc&type=user">asc</a> | <a href="?sort=desc&type=user">desc</a></span>
+              <select class="" name="" onchange="if (this.value) window.location.href = this.value">
                 <option value="">Select</option>
                 <?php
                 // $users recieved from Index::$getUsers()
@@ -72,35 +67,45 @@
                 foreach( $userNamesUniqArr as $userName ) {
                   echo "<option value='?name=$userName&select=name'>$userName</option>";
                 }?>
-              </select></td>
-            <td><select class="" name="" onchange="if (this.value) window.location.href = this.value">
-             <option value="">Select</option>
-               <?php
-               // $emails recieved from Index::$getEmails()
-               $dbSelectEmails = $emails;
+              </select>
+            </div>
+              <div class="sm-1">
+                <span class="alert-link">Sort by email: </span><span class="small"><a href="?sort=asc&type=email">asc</a> | <a href="?sort=desc&type=email">desc</a></span>
+                <select class="" name="" onchange="if (this.value) window.location.href = this.value">
+                  <option value="">Select</option>
+                  <?php
+                  // $emails recieved from Index::$getEmails()
+                  $dbSelectEmails = $emails;
 
-               $emailArr = array_column( $dbSelectEmails, 'email');
-               $emailUniqArr = array_unique( $emailArr );
-               foreach( $emailUniqArr as $userEmail ) {
-                 echo "<option value='?email=$userEmail&select=email'>$userEmail</option>";
-               }?>
+                  $emailArr = array_column( $dbSelectEmails, 'email');
+                  $emailUniqArr = array_unique( $emailArr );
+                  foreach( $emailUniqArr as $userEmail ) {
+                    echo "<option value='?email=$userEmail&select=email'>$userEmail</option>";
+                  }?>
                 </select>
-         </td>
-         <td><select class="" name="" onchange="if (this.value) window.location.href = this.value">
-           <option value="">Select</option>
-           <?php
-           // $statuses recieved from Index::$getStatuses()
-           $dbSelectStatus = $statuses;
+              </div>
+              <div class="sm-1">
+                <span class="alert-link">Sort by status: </span><span class="small"><a href="?sort=asc&type=status">asc</a> | <a href="?sort=desc&type=status">desc</a></span>
+                <select class="" name="" onchange="if (this.value) window.location.href = this.value">
+                  <option value="">Select</option>
+                  <?php
+                  // $statuses recieved from Index::$getStatuses()
+                  $dbSelectStatus = $statuses;
 
-           $statusArr = array_column( $dbSelectStatus, 'status');
-           $statusUniqArr = array_unique( $statusArr );
+                  $statusArr = array_column( $dbSelectStatus, 'status');
+                  $statusUniqArr = array_unique( $statusArr );
 
-           foreach( $statusUniqArr as $status ) {
-             echo "<option value='?status=$status&select=status'>$status</option>";
-           }?>
-         </select></td>
-          </tr>
-      </table>
+                  foreach( $statusUniqArr as $status ) {
+                    echo "<option value='?status=$status&select=status'>$status</option>";
+                  }?>
+                </select>
+              </div>
+
+
+
+
+
+
     </div>
       <?php
       // $tasks recieved from Index::$getTasks()
@@ -129,7 +134,7 @@
       </div>
     <?php endforeach ?>
       </tbody>
-    </table>
+
     <nav aria-label="Page navigation example">
       <ul class="pagination">
 
